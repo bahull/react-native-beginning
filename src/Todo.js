@@ -39,17 +39,19 @@ export default class Todo extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Your dreaded to do list</Text>
-        <TextInput
-          style={styles.textWidth}
-          value={this.state.newTodo}
-          onChangeText={this.handleChange}
-        />
-        <Button onPress={this.submitTodo} title="Add a Todo" />
+        <View style={styles.flexed}>
+          <TextInput
+            style={styles.textWidth}
+            value={this.state.newTodo}
+            onChangeText={this.handleChange}
+          />
+          <Button onPress={this.submitTodo} title="Add a Todo" />
+        </View>
         {this.state.todos.map((todo, ind) => {
           return (
-            <View key={ind}>
+            <View style={styles.flexed} key={ind}>
               <Text>{todo}</Text>
-              <Button title="string" onPress={() => this.deleteTodo(ind)} />
+              <Button title="Finished" onPress={() => this.deleteTodo(ind)} />
             </View>
           );
         })}
@@ -61,14 +63,14 @@ export default class Todo extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "lightgrey"
   },
   welcome: {
     fontSize: 30,
     textAlign: "center",
-    margin: 10
+    margin: 10,
+    marginTop: 40
   },
   instructions: {
     textAlign: "center",
@@ -76,6 +78,13 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   textWidth: {
-    width: "30%"
+    width: "35%",
+    backgroundColor: "rgba(190,190,190, 1)",
+    borderRadius: 8
+  },
+  flexed: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

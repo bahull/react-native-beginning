@@ -15,7 +15,8 @@ import {
   Button
 } from "react-native";
 
-import Todo from "./Todo";
+import Todo from "./src/Todo";
+// import Fancy from "./src/Fancy";
 
 export default class App extends Component {
   render() {
