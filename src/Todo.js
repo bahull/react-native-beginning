@@ -6,7 +6,8 @@ import {
   View,
   TextInput,
   TouchableHighlight,
-  Button
+  Button,
+  TouchableOpacity
 } from "react-native";
 
 export default class Todo extends Component {
@@ -38,23 +39,30 @@ export default class Todo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Your dreaded to do list</Text>
         <View style={styles.flexed}>
           <TextInput
             style={styles.textWidth}
             value={this.state.newTodo}
             onChangeText={this.handleChange}
           />
-          <Button onPress={this.submitTodo} title="Add a Todo" />
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText} onPress={this.submitTodo}>
+              Make
+            </Text>
+          </TouchableOpacity>
         </View>
-        {this.state.todos.map((todo, ind) => {
-          return (
-            <View style={styles.flexed} key={ind}>
-              <Text>{todo}</Text>
-              <Button title="Finished" onPress={() => this.deleteTodo(ind)} />
-            </View>
-          );
-        })}
+        <View style={styles.todos}>
+          {this.state.todos.map((todo, ind) => {
+            return (
+              <View style={styles.todo} key={ind}>
+                <Text style={styles.todoText}>{todo}</Text>
+                <TouchableOpacity onPress={() => this.deleteTodo(ind)}>
+                  <Text style={styles.todoText}>Completed</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </View>
       </View>
     );
   }
@@ -64,8 +72,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "lightgrey"
+    // backgroundColor: "lightgrey",
+    padding: 20
   },
+
   welcome: {
     fontSize: 30,
     textAlign: "center",
@@ -80,11 +90,42 @@ const styles = StyleSheet.create({
   textWidth: {
     width: "35%",
     backgroundColor: "rgba(190,190,190, 1)",
-    borderRadius: 8
+    borderRadius: 8,
+    flex: 0.7,
+    fontSize: 24
   },
   flexed: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"
+  },
+  button: {
+    flex: 0.3,
+    borderWidth: 1,
+    height: 50,
+    borderRadius: 3,
+    borderColor: "blue",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: "bold"
+  },
+  todos: {
+    marginTop: 60
+  },
+  todo: {
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgrey",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+    marginBottom: 10
+  },
+  todoText: {
+    fontSize: 24,
+    margin: 5
   }
 });
