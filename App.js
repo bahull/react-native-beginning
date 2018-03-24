@@ -17,10 +17,10 @@ import {
 
 // import Todo from "./src/Todo";
 // import Fancy from "./src/Fancy";
-import Reddit from "./src/Reddit";
+import Starwars from "./src/Starwars";
 
 export default class App extends Component {
   render() {
-    return <Reddit />;
+    return <Starwars />;
   }
 }
