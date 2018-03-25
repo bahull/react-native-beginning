@@ -26,9 +26,21 @@ export default class Todo extends Component {
   handleChange(e) {
     this.setState({ newTodo: e });
   }
-  submitTodo() {
+  componentDidMount() {
     axios
-      .post("http://localhost:3001/api/addTodo", { item: this.state.newTodo })
+      .get("http://192.168.8.89:3001/getTodo")
+      .then(resp => {
+        this.setState({ todos: resp.data });
+      })
+      .catch(console.log);
+  }
+
+  submitTodo() {
+    console.log("Hit");
+    axios
+      .post("http://192.168.8.89:3001/api/addTodo", {
+        item: this.state.newTodo
+      })
       .then(resp => {
         this.setState({ todos: resp.data, newTodo: "" });
       })
@@ -62,9 +74,9 @@ export default class Todo extends Component {
             return (
               <View style={styles.todo} key={ind}>
                 <Text style={styles.todoText}>{todo.todo}</Text>
-                <TouchableOpacity onPress={() => this.deleteTodo(todo)}>
+                <TouchableHighlight onPress={() => this.deleteTodo(todo)}>
                   <Text style={styles.todoText}>Completed</Text>
-                </TouchableOpacity>
+                </TouchableHighlight>
               </View>
             );
           })}

@@ -15,12 +15,19 @@ import {
   Button
 } from "react-native";
 
+import { Provider } from "react-redux";
+import store from "./src/store";
+
 import Todo from "./src/Todo";
 // import Fancy from "./src/Fancy";
 // import Starwars from "./src/Starwars";
 
 export default class App extends Component {
   render() {
-    return <Todo />;
+    return (
+      <Provider store={store}>
+        <Todo />
+      </Provider>
+    );
   }
 }

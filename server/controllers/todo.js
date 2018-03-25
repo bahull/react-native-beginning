@@ -1,5 +1,5 @@
-let todos = [];
-let id = 1;
+let todos = [{ todo: "Testing!!", id: 1 }];
+let id = 2;
 
 const addTodo = (req, res, next) => {
   console.log(todos);
