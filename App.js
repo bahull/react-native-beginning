@@ -15,12 +15,12 @@ import {
   Button
 } from "react-native";
 
-// import Todo from "./src/Todo";
+import Todo from "./src/Todo";
 // import Fancy from "./src/Fancy";
-import Starwars from "./src/Starwars";
+// import Starwars from "./src/Starwars";
 
 export default class App extends Component {
   render() {
-    return <Starwars />;
+    return <Todo />;
   }
 }

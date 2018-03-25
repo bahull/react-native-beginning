@@ -8,19 +8,25 @@ export default class Starwars extends Component {
     this.state = {
       people: []
     };
+    this.addFriendOrFoe = this.addFriendOrFoe.bind(this);
   }
   componentDidMount() {
     fetch("https://www.swapi.co/api/people", { Accept: "application/json" })
       .then(res => res.json())
       .then(data => this.setState({ people: data.results }));
   }
+
+  addFriendOrFoe(e) {
+    console.log(e);
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Star Wars Characters</Text>
+        <Text style={styles.title}>Star Wars Manifest</Text>
         {this.state.people.length > 0 &&
           this.state.people.map((curr, ind) => (
-            <People person={curr} key={ind} />
+            <People person={curr} key={ind} addPerson={this.addFriendOrFoe} />
           ))}
       </View>
     );
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    marginBottom: 60,
+    marginBottom: 10,
     marginTop: 30
   }
 });

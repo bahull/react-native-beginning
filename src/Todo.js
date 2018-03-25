@@ -10,6 +10,8 @@ import {
   TouchableOpacity
 } from "react-native";
 
+import axios from "axios";
+
 export default class Todo extends Component {
   constructor() {
     super();
@@ -25,15 +27,19 @@ export default class Todo extends Component {
     this.setState({ newTodo: e });
   }
   submitTodo() {
-    const todos = [...this.state.todos, this.state.newTodo];
-    this.setState({ todos: todos, newTodo: "" });
+    axios
+      .post("http://localhost:3001/api/addTodo", { item: this.state.newTodo })
+      .then(resp => {
+        this.setState({ todos: resp.data, newTodo: "" });
+      })
+      .catch(console.log);
   }
-  deleteTodo(ind) {
-    const todos = [
-      ...this.state.todos.slice(0, ind),
-      ...this.state.todos.slice(ind + 1)
-    ];
-    this.setState({ todos });
+  deleteTodo(current) {
+    axios
+      .delete(`http://localhost:3001/api/removeTodo/${current.id}`)
+      .then(resp => {
+        this.setState({ todos: resp.data });
+      });
   }
 
   render() {
@@ -55,8 +61,8 @@ export default class Todo extends Component {
           {this.state.todos.map((todo, ind) => {
             return (
               <View style={styles.todo} key={ind}>
-                <Text style={styles.todoText}>{todo}</Text>
-                <TouchableOpacity onPress={() => this.deleteTodo(ind)}>
+                <Text style={styles.todoText}>{todo.todo}</Text>
+                <TouchableOpacity onPress={() => this.deleteTodo(todo)}>
                   <Text style={styles.todoText}>Completed</Text>
                 </TouchableOpacity>
               </View>
