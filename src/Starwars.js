@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import People from "./People";
 
 export default class Starwars extends Component {
@@ -24,10 +24,12 @@ export default class Starwars extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Star Wars Manifest</Text>
-        {this.state.people.length > 0 &&
-          this.state.people.map((curr, ind) => (
-            <People person={curr} key={ind} addPerson={this.addFriendOrFoe} />
-          ))}
+        <ScrollView>
+          {this.state.people.length > 0 &&
+            this.state.people.map((curr, ind) => (
+              <People person={curr} key={ind} addPerson={this.addFriendOrFoe} />
+            ))}
+        </ScrollView>
       </View>
     );
   }

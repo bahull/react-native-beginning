@@ -18,15 +18,20 @@ import {
 import { Provider } from "react-redux";
 import store from "./src/store";
 
+import TabView from "react-native-scrollable-tab-view";
+
 import Todo from "./src/Todo";
 // import Fancy from "./src/Fancy";
-// import Starwars from "./src/Starwars";
+import Starwars from "./src/Starwars";
 
 export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Todo />
+        <TabView tabBarPosition="bottom">
+          <Todo tabLabel="Todos" />
+          <Starwars tabLabel="Starwars" />
+        </TabView>
       </Provider>
     );
   }

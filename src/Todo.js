@@ -10,6 +10,8 @@ import {
   TouchableOpacity
 } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
+
 import axios from "axios";
 
 export default class Todo extends Component {
@@ -28,7 +30,7 @@ export default class Todo extends Component {
   }
   componentDidMount() {
     axios
-      .get("http://192.168.8.89:3001/getTodo")
+      .get("http://192.168.8.89:3001/api/getTodo")
       .then(resp => {
         this.setState({ todos: resp.data });
       })
@@ -37,14 +39,17 @@ export default class Todo extends Component {
 
   submitTodo() {
     console.log("Hit");
-    axios
-      .post("http://192.168.8.89:3001/api/addTodo", {
-        item: this.state.newTodo
-      })
-      .then(resp => {
-        this.setState({ todos: resp.data, newTodo: "" });
-      })
-      .catch(console.log);
+    if (this.state.newTodo.length >= 1) {
+      axios
+        .post("http://192.168.8.89:3001/api/addTodo", {
+          item: this.state.newTodo
+        })
+        .then(resp => {
+          console.log(resp);
+          this.setState({ todos: resp.data, newTodo: "" });
+        })
+        .catch(console.log);
+    }
   }
   deleteTodo(current) {
     axios
@@ -56,18 +61,19 @@ export default class Todo extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <LinearGradient
+        colors={["rgb(56, 11,118)", "rgb(113, 3, 60)"]}
+        style={styles.container}
+      >
         <View style={styles.flexed}>
           <TextInput
             style={styles.textWidth}
             value={this.state.newTodo}
             onChangeText={this.handleChange}
           />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText} onPress={this.submitTodo}>
-              Make
-            </Text>
-          </TouchableOpacity>
+          <TouchableHighlight style={styles.button} onPress={this.submitTodo}>
+            <Text style={styles.buttonText}>Make</Text>
+          </TouchableHighlight>
         </View>
         <View style={styles.todos}>
           {this.state.todos.map((todo, ind) => {
@@ -81,7 +87,7 @@ export default class Todo extends Component {
             );
           })}
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }
